@@ -1,0 +1,15 @@
+{
+  "name": "plan-financier",
+  "version": "1.0.0",
+  "description": "Plan Financier Personnel — budget piloté, fonds cumulés, grand livre annuel",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/index.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server/index.js",
+    "test": "node --disable-warning=ExperimentalWarning --test \"test/**/*.test.js\""
+  }
+}

@@ -1,0 +1,45 @@
+# ------------------------------------------------------------------
+# Données personnelles — NE DOIVENT JAMAIS ÊTRE PUBLIÉES
+#
+# data/ contient la base SQLite : plans financiers, adresses e-mail et
+# empreintes de mots de passe. Un dépôt public ou même privé n'est pas
+# l'endroit pour ça.
+# ------------------------------------------------------------------
+data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Exports et sauvegardes de plans
+plan-financier*.json
+plan-financier*.json.importe
+*.corrompu-*
+
+# ------------------------------------------------------------------
+# Secrets
+# ------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ------------------------------------------------------------------
+# Dépendances et artefacts
+# ------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+*.log
+
+# ------------------------------------------------------------------
+# Outils et systèmes
+# ------------------------------------------------------------------
+.playwright-mcp/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

@@ -1,0 +1,50 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Plan financier personnel — prévu contre réel, fonds cumulés, grand livre annuel.">
+<title>Plan financier</title>
+<link rel="stylesheet" href="/fonts.css">
+<link rel="stylesheet" href="/styles.css">
+<link rel="manifest" href="/app.webmanifest">
+<link rel="apple-touch-icon" href="/icones/apple-touch-icon.png">
+<meta name="theme-color" content="#FBF8F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15191B" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Plan">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%23FBF8F0'/><path d='M7 7h18M7 12h18M7 17h11' stroke='%23B4892B' stroke-width='2.2' stroke-linecap='round'/><path d='M7 23h18' stroke='%2396343F' stroke-width='2.2' stroke-linecap='round'/></svg>">
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<div class="chargement" id="chargement">
+  <div class="chargement__marque">Plan financier</div>
+  <div class="chargement__trait"></div>
+</div>
+
+<div class="coque" id="coque" hidden>
+  <header class="rail" id="rail">
+    <div class="rail__tete">
+      <span class="rail__filet"></span>
+      <h1 class="rail__titre">Plan<br>financier</h1>
+      <p class="rail__sous-titre" id="rail-annee"></p>
+    </div>
+
+    <nav class="rail__nav" id="nav" aria-label="Sections"></nav>
+
+    <div class="rail__pied">
+      <div class="etat-sauvegarde" id="etat-sauvegarde" role="status" aria-live="polite">
+        <span class="etat-sauvegarde__point"></span>
+        <span class="etat-sauvegarde__texte">Prêt</span>
+      </div>
+      <button class="bouton bouton--discret bouton--bloc" type="button" id="bouton-theme" aria-label="Changer de thème">
+        <span aria-hidden="true">◐</span> Thème
+      </button>
+    </div>
+  </header>
+
+  <main class="contenu" id="contenu" tabindex="-1"></main>
+</div>
+
+<div class="pile-messages" id="pile-messages" aria-live="polite" aria-atomic="false"></div>
+<div class="infobulle" id="infobulle" role="tooltip" hidden></div>
+
+<script type="module" src="/app.js"></script>
