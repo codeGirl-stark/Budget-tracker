@@ -4,7 +4,10 @@ Application de pilotage budgétaire multi-utilisateur : prévu contre réel par
 catégorie, fonds suivis en cumulé sur plusieurs années, tableau de bord et grand
 livre annuel. Chaque personne a son compte et son plan, invisible des autres.
 
-Implémentation du [cahier des charges](./cahier-des-charges-plan-financier.md).
+Conçue autour d'une contrainte forte : **la dîme n'est pas un poste de budget
+comme un autre.** Elle vaut 10 % du revenu, se calcule toute seule, et l'interface
+n'offre aucun moyen de la saisir à la main. Le reste du produit découle de cette
+idée — une architecture financière pilotée plutôt qu'un carnet de dépenses.
 
 ## Démarrer
 
@@ -160,6 +163,43 @@ Le volet « Comptes » gère les **accès**, jamais les finances :
 Garde-fous contre l'auto-verrouillage : un administrateur ne peut ni se
 suspendre, ni se supprimer lui-même, et le dernier administrateur actif ne peut
 pas être rétrogradé, suspendu ou supprimé.
+
+## Déploiement (Fly.io)
+
+```bash
+fly launch --no-deploy      # crée l'app à partir de fly.toml, sans déployer
+fly volumes create donnees --size 1 --region cdg
+fly deploy
+fly open
+```
+
+**Le volume est indispensable.** Sans lui, chaque déploiement repartirait d'une
+base vide et tous les comptes disparaîtraient.
+
+**Une seule machine, jamais plus.** Les données vivent dans un fichier SQLite sur
+le volume, et un volume Fly ne s'attache qu'à une machine à la fois. `fly scale
+count 2` créerait un second volume, donc une seconde base : les comptes seraient
+répartis au hasard entre les deux. La configuration laisse la machine s'arrêter
+quand personne ne l'utilise et redémarrer à la première requête.
+
+Le premier compte créé sur l'instance déployée en devient l'administrateur. Pour
+le fixer à l'avance :
+
+```bash
+fly secrets set ADMIN_EMAIL=ton.adresse@exemple.com
+```
+
+### Reprendre ses données locales
+
+L'application déployée démarre avec une base vide — les données locales ne sont
+pas publiées. Pour les récupérer : **Réglages → Exporter une sauvegarde** en
+local, puis **Importer un fichier** une fois connectée sur l'instance déployée.
+
+### Sauvegardes
+
+```bash
+fly ssh console -C "cat /data/plan-financier.db" > sauvegarde.db
+```
 
 ## Détails d'interface
 

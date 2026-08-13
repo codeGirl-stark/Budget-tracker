@@ -482,6 +482,9 @@ async function gererApi(requete, reponse, url) {
     }
   }
 
+  // Contrôle de santé de l'hébergeur : volontairement muet sur le contenu.
+  if (cle === 'GET /api/sante') return json(reponse, 200, { ok: true });
+
   if (cle === 'POST /api/inscription') return inscription(requete, reponse);
   if (cle === 'POST /api/connexion') return connexion(requete, reponse);
 

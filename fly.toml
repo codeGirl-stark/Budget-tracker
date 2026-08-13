@@ -1,0 +1,58 @@
+########################################################################
+# Configuration Fly.io
+#
+# Le nom d'application et la région sont à ajuster : `fly launch` les
+# renseigne, ou modifie-les à la main avant `fly deploy`.
+#
+# ATTENTION — une seule machine, jamais plus.
+# Les données vivent dans un fichier SQLite sur le volume monté. Un volume
+# Fly n'est attaché qu'à une machine à la fois : lancer une deuxième
+# instance créerait un second volume, donc une seconde base, et les comptes
+# seraient répartis au hasard entre les deux. Ne fais pas `fly scale count 2`.
+########################################################################
+
+app = "plan-financier"
+primary_region = "cdg"   # Paris — la plus proche de Dakar parmi les régions Fly
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  HOST = "0.0.0.0"
+  DATA_DIR = "/data"
+  TRUST_PROXY = "1"
+
+# Le disque qui survit aux redéploiements. Sans lui, chaque déploiement
+# effacerait tous les comptes.
+[mounts]
+  source = "donnees"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+
+  # La machine s'arrête quand personne ne l'utilise et redémarre à la
+  # première requête (quelques secondes). C'est ce qui garde la facture
+  # proche de zéro pour un usage personnel.
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
+
+  # Contrôle de santé : une route publique qui ne révèle rien.
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/api/sante"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

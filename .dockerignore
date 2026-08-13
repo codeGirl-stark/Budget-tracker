@@ -1,0 +1,22 @@
+# Données locales — elles ne doivent jamais entrer dans l'image.
+# En production, la base vit sur le volume monté sur /data.
+data/
+*.db
+*.db-wal
+*.db-shm
+plan-financier*.json
+
+# Inutile à l'exécution
+.git/
+.gitignore
+node_modules/
+test/
+.playwright-mcp/
+*.log
+*.md
+Dockerfile
+.dockerignore
+fly.toml
+
+# Document personnel
+cahier-des-charges-plan-financier.md

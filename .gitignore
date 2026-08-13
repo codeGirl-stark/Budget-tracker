@@ -43,3 +43,6 @@ Thumbs.db
 .vscode/
 *.swp
 *~
+
+# Document de travail personnel (revenu, ville, situation familiale)
+cahier-des-charges-plan-financier.md
